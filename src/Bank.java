@@ -1,57 +1,88 @@
-public class Bank {
+import java.util.ArrayList;
 
-    private BankAccount accounts[]; // contas bancárias
-    private int last; // último índice do banco inserido
-    private int maxAccounts;
+public class Bank implements BankAccountOperation {
+
+    private ArrayList<BankAccount> bankAccounts; // contas bancárias
 
     public Bank() {
-        maxAccounts = 100;
-        accounts = new BankAccount[maxAccounts]; // banco com, no máximo, 100 contas bancárias
-        last = 0;
+        setBankAccounts(new ArrayList<BankAccount>());
     }
 
-    public BankAccount addAccount(BankAccount account) {
-        if (this.last <= this.maxAccounts) {
-            this.accounts[this.last] = account;
-            this.last += 1;
-            return account;
-        }
-        return null;
+    public double getBalance(int accountNumber) {
+        return this.find(accountNumber).getBalance();
     }
 
-    public double getTotalBalance() {
-        int saldoTotal = 0;
-        for (BankAccount account : this.accounts) {
-            if (account != null)
-                saldoTotal += account.getBalance();
-        }
-        return saldoTotal;
+    public void deposit(int accountNumber, double value) {
+        BankAccount bankAccount = this.find(accountNumber);
+        bankAccount.setBalance(bankAccount.getBalance() + value);
+    }
+
+    public void withdraw(int accountNumber, double value) {
+        BankAccount bankAccount = this.find(accountNumber);
+        bankAccount.setBalance(bankAccount.getBalance() - value);
+    }
+
+    public void addAccount(BankAccount account) {
+        getBankAccounts().add(account);
     }
 
     public BankAccount find(int accountNumber) {
-        for (BankAccount account : this.accounts) {
-            if (account != null && account.getAccountNumber() == accountNumber)
-                return account;
+        for (BankAccount bankAccount : getBankAccounts()) {
+            if (bankAccount != null && bankAccount.getAccountNumber() == accountNumber)
+                return bankAccount;
         }
         return null;
     }
 
-    public BankAccount getMaximum() {
-        BankAccount maiorSaldo = this.accounts[0];
-        for (BankAccount account : this.accounts) {
-            if (account != null && account.getBalance() > maiorSaldo.getBalance())
-                maiorSaldo = account;
+    public BankAccount getAccountBiggestBalance() {
+        BankAccount maiorSaldo = getBankAccounts().get(0);
+        for (BankAccount bankAccount : getBankAccounts()) {
+            if (bankAccount != null && bankAccount.getBalance() > maiorSaldo.getBalance())
+                maiorSaldo = bankAccount;
         }
         return maiorSaldo;
     }
 
+    public BankAccount getAccountLowestBalance() {
+        BankAccount menorSaldo = getBankAccounts().get(0);
+        for (BankAccount bankAccount : getBankAccounts()) {
+            if (bankAccount != null && bankAccount.getBalance() < menorSaldo.getBalance())
+                menorSaldo = bankAccount;
+        }
+        return menorSaldo;
+    }
+
+    public double getAverageBalance() {
+        double mediaSaldo = getBankAccounts().get(0).getBalance();
+        for (BankAccount bankAccount : getBankAccounts()) {
+            mediaSaldo += bankAccount.getBalance();
+        }
+        return mediaSaldo / getBankAccounts().size();
+    }
+
+    public double getSumBalanceAccounts() {
+        double somaSaldo = 0;
+        for (BankAccount bankAccount : getBankAccounts()) {
+            somaSaldo += bankAccount.getBalance();
+        }
+        return somaSaldo;
+    }
+
     public int count(int limit) {
         int countContas = 0;
-        for (BankAccount account : this.accounts) {
-            if (account != null && account.getBalance() >= limit)
+        for (BankAccount bankAccount : getBankAccounts()) {
+            if (bankAccount != null && bankAccount.getBalance() >= limit)
                 countContas += 1;
         }
         return countContas;
+    }
+
+    public ArrayList<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void setBankAccounts(ArrayList<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
 
 }

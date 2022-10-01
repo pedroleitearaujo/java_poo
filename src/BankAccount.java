@@ -6,29 +6,15 @@ public class BankAccount {
     private double balance;
 
     public BankAccount(int accountNumber, String password, String owner, double balance) {
-
         this.setAccountNumber(accountNumber);
-
-        if (password == null) // se ainda não houver uma senha
-            password = "123"; // cria uma senha-padrão
-        else
-            setPassword(password);
-
-        if (owner == null) // Se não houver nome criado, utiliza um nome-padrão
-            owner = "Nome não-informado";
-        else
-            setOwner(owner);
-
-        setBalance(balance);
+        this.setPassword(password);
+        this.setOwner(owner);
+        this.setBalance(balance);
     }
 
-    public void showBankAccount() {
-        System.out.println("-------------------");
-        System.out.println("Numero da conta: " + this.getAccountNumber());
-        System.out.println("Senha: " + this.getPassword());
-        System.out.println("Dono: " + this.getOwner());
-        System.out.println("Saldo: " + this.getBalance());
-        System.out.println("-------------------");
+    public String showBankAccount() {
+        return "Numero da conta: " + this.getAccountNumber() + " Senha: " + this.getPassword() + " Dono: "
+                + this.getOwner() + " Saldo: " + this.getBalance();
     }
 
     public int getAccountNumber() {
