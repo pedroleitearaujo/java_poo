@@ -26,16 +26,15 @@ public class App {
 
       switch (handleNumber.getHandleNumber()) {
         case 1:
-          // accountNumber = utils.showIntJOptionPane("Digite um numero para a conta.");
-          // password = utils.showStringJOptionPane("Digite uma senha para a conta.");
-          // owner = utils.showStringJOptionPane("Digite o nome do responsavel da
-          // conta.");
-          // balance = utils.showIntJOptionPane("Digite o saldo para a conta.");
+          accountNumber = utils.showIntJOptionPane("Digite um numero para a conta.");
+          password = utils.showStringJOptionPane("Digite uma senha para a conta.");
+          owner = utils.showStringJOptionPane("Digite o nome do responsavel da conta.");
+          balance = utils.showIntJOptionPane("Digite o saldo para a conta.");
 
-          // atm.getBank().addAccount(new BankAccount(accountNumber, password, owner,
-          // balance));
-          atm.getBank().addAccount(new BankAccount(123, "12345", "pedro", 10000));
-          atm.getBank().addAccount(new BankAccount(1233, "345", "teste", 2000));
+          atm.getBank().addAccount(new BankAccount(accountNumber, password, owner,
+              balance));
+          // atm.getBank().addAccount(new BankAccount(123, "12345", "pedro", 10000));
+          // atm.getBank().addAccount(new BankAccount(1233, "345", "teste", 2000));
           // System.out.println(doGetBalance(atm, 123));
           break;
         case 2:
@@ -85,7 +84,7 @@ public class App {
     Utils utils = new Utils();
     int accountNumber = utils.showIntJOptionPane("Digite o numero da conta que deseja fazer o deposito.");
     double value = utils
-        .showDoubleJOptionPane("Digite o valor do deposito. \nSaldo Atual: " + bao.getBalance(accountNumber));
+        .showDoubleJOptionPane("Digite o valor do " + type + " \nSaldo Atual: " + bao.getBalance(accountNumber));
     bao.getClass().getDeclaredMethod(type, int.class, double.class).invoke(bao, accountNumber, value);
   }
 
